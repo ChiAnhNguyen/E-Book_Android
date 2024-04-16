@@ -5,6 +5,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
@@ -16,6 +18,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.bookselling.Model.Category;
 import com.example.bookselling.Model.Product;
 import com.example.bookselling.Model.productImage;
+import com.example.bookselling.Model.product_detail;
 import com.example.bookselling.MyAdapter.ProductAdapter;
 import com.example.bookselling.Service.MyRetrofit;
 import com.example.bookselling.Service.ProductService;
@@ -44,6 +47,20 @@ public class MainActivity extends AppCompatActivity {
         // Khởi tạo Retrofit Service
         productService = MyRetrofit.getClient().create(ProductService.class);
         loadData();
+//        list_product.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//            @Override
+//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+//                Object obj = view
+//                // Tạo Intent để mở màn hình chi tiết sản phẩm
+//                Intent intent = new Intent(MainActivity.this, detail_productActivity.class);
+//
+//                // Đính kèm dữ liệu sản phẩm vào Intent
+//                intent.putExtra("PRODUCT_DETAIL", product_detail);
+//                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+//                // Mở màn hình chi tiết sản phẩm
+//                startActivity(intent);
+//            }
+//        });
 
 //    private void performSearch(String keyword) {
 //
@@ -89,7 +106,33 @@ public class MainActivity extends AppCompatActivity {
 //            }
 //                    }
                     list_product.setAdapter(productAdapter);
+                    list_product.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                        @Override
+                        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                            Map<String, Object> product_detailMap =  productList.get(position);
+                            Map<String, Object> productMap =(Map<String, Object>) product_detailMap.get("product");
+                            Map<String, Object> categorytMap =(Map<String, Object>) product_detailMap.get("category");
+                            product_detail detail = new product_detail();
+                            detail.setProductName((String) productMap.get("productName"));
+                            detail.setAuthor((String)productMap.get("author"));
+                            detail.setCategotyName((String) categorytMap.get("categoryName"));
+                            detail.setPrice((Double) productMap.get("price"));
+                            detail.setPublisher((String) productMap.get("publisher"));
+                            detail.setDescript((String) productMap.get("descript"));
+                            Double productID_db = (Double)productMap.get("productID");
+                            int productID = productID_db.intValue();
+                            detail.setProductID(productID);
+                             //Tạo Intent để mở màn hình chi tiết sản phẩm
+                            Intent intent = new Intent(MainActivity.this, detail_productActivity.class);
 
+                            // Đính kèm dữ liệu sản phẩm vào Intent
+                            intent.putExtra("PRODUCT_DETAIL", detail);
+                            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                            // Mở màn hình chi tiết sản phẩm
+                            startActivity(intent);
+
+                        }
+                    });
 //                    Toast.makeText(getApplicationContext(), "call API success", Toast.LENGTH_SHORT).show();
                 } else {
                     Log.e("ProductAdapter", "Error: " + response.message());
@@ -115,5 +158,6 @@ public class MainActivity extends AppCompatActivity {
         // Thiết lập LayoutManager cho RecyclerView
 
     }
+
 
 }

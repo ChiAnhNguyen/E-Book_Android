@@ -1,6 +1,7 @@
 package com.example.bookselling.MyAdapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.util.Log;
@@ -73,7 +74,7 @@ public class ProductAdapter extends BaseAdapter {
             holder.price = convertView.findViewById(R.id.textViewProductPrice);
             holder.imageproduct =convertView.findViewById(R.id.imageViewProduct);
             convertView.setTag(holder);
-        }else{
+        }else {
             holder = (ViewHolder) convertView.getTag();// lưu lại viewholder để tái sử dụng
         }
         Map<String, Object> productMap = this.list_product.get(position);// Lấy phần tử từ danh sách ứng với vị trí position
