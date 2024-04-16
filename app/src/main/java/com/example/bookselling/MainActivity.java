@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -22,6 +23,8 @@ import com.example.bookselling.Model.product_detail;
 import com.example.bookselling.MyAdapter.ProductAdapter;
 import com.example.bookselling.Service.MyRetrofit;
 import com.example.bookselling.Service.ProductService;
+import com.example.bookselling.Service.Utils;
+import com.nex3z.notificationbadge.NotificationBadge;
 
 import java.util.List;
 import java.util.ArrayList;
@@ -38,14 +41,38 @@ public class MainActivity extends AppCompatActivity {
 
     private EditText etSearch;
     private ImageButton btnCart;
+    private NotificationBadge badge;
+    FrameLayout cartframe;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         list_product = findViewById(R.id.list_product);
+        badge = findViewById(R.id.menu_sl);
+        cartframe = findViewById(R.id.framecart);
         // Khởi tạo Retrofit Service
         productService = MyRetrofit.getClient().create(ProductService.class);
+        if(Utils.arr_Cart==null){
+        Utils.arr_Cart = new ArrayList<>();
+        }else {
+            if(Utils.arr_Cart != null){
+                int totalitem = 0;
+                for(int i =0; i<Utils.arr_Cart.size();i++){
+                    totalitem = totalitem + Utils.arr_Cart.get(i).getQuantity();
+                }
+                badge.setText(String.valueOf(totalitem));
+            }
+        }
+        ImageButton btnRegister = findViewById(R.id.btnRegister);
+        btnRegister.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Tạo intent để mở RegisterActivity
+                Intent registerIntent = new Intent(MainActivity.this, RegisterActivity.class);
+                startActivity(registerIntent);
+            }
+        });
         loadData();
 //        list_product.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 //            @Override
@@ -65,6 +92,13 @@ public class MainActivity extends AppCompatActivity {
 //    private void performSearch(String keyword) {
 //
 //    }
+        cartframe.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent cart = new Intent(getApplicationContext(),CartActivity.class);
+                startActivity(cart);
+            }
+        });
 
 }
     private void loadData(){
@@ -159,5 +193,15 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if(Utils.arr_Cart != null){
+            int totalitem = 0;
+            for(int i =0; i<Utils.arr_Cart.size();i++){
+                totalitem = totalitem + Utils.arr_Cart.get(i).getQuantity();
+            }
+            badge.setText(String.valueOf(totalitem));
+        }
+    }
 }

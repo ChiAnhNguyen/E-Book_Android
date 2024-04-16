@@ -11,7 +11,28 @@
         android:background="#3AD541"
         app:title="Chi Tiết Sản Phẩm"
         android:id="@+id/toolbar"
-        />
+        >
+        <FrameLayout
+            android:id="@+id/framecart"
+            android:layout_width="55dp"
+            android:layout_height="?attr/actionBarSize"
+            android:layout_marginRight="10dp"
+            android:layout_gravity="right">
+
+            <com.nex3z.notificationbadge.NotificationBadge
+                android:id="@+id/menu_sl"
+                android:layout_width="28dp"
+                android:layout_height="28dp"
+                android:layout_gravity="top|right" />
+            <ImageView
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:layout_marginTop="15sp"
+                android:src="@drawable/baseline_cart_24"
+                />
+        </FrameLayout>
+    </androidx.appcompat.widget.Toolbar>
+
     <LinearLayout
         android:id="@+id/layout1"
         android:layout_width="match_parent"

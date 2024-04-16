@@ -30,12 +30,18 @@ android {
 
 dependencies {
     implementation("androidx.appcompat:appcompat:1.6.1")
+    //Picasso
     implementation ("com.squareup.picasso:picasso:2.71828")
+    //Retrofit
     implementation ("com.squareup.retrofit2:retrofit:2.9.0")
     implementation ("com.squareup.retrofit2:converter-gson:2.9.0")
 
     implementation("com.google.android.material:material:1.11.0")
     implementation("androidx.constraintlayout:constraintlayout:2.1.4")
+    //badge
+    implementation("com.nex3z:notification-badge:1.0.5")
+    // event bus
+    implementation("org.greenrobot:eventbus:3.3.1")
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")

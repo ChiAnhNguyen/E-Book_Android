@@ -7,33 +7,55 @@
     tools:context=".MainActivity">
 
     <!-- Search bar -->
+
+    <ImageButton
+        android:id="@+id/btnRegister"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:scaleType="centerInside"
+        android:src="@drawable/ic_register"></ImageButton>
+
+    <!-- Cart icon -->
+
+    <!-- RecyclerView for grid layout of books -->
+
+
+    <FrameLayout
+        android:id="@+id/framecart"
+        android:layout_width="70dp"
+        android:layout_height="wrap_content"
+        android:layout_alignEnd="@+id/etSearch"
+        android:layout_marginEnd="-86dp"
+        android:layout_marginRight="10dp">
+
+        <com.nex3z.notificationbadge.NotificationBadge
+            android:id="@+id/menu_sl"
+            android:layout_width="46dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="top|right" />
+
+        <ImageView
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:layout_marginTop="15sp"
+            android:src="@drawable/baseline_cart_24" />
+
+    </FrameLayout>
+
     <EditText
         android:id="@+id/etSearch"
-        android:layout_width="304dp"
+        android:layout_width="276dp"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="10dp"
+        android:layout_marginStart="-1dp"
+        android:layout_marginTop="3dp"
         android:layout_marginBottom="10dp"
+        android:layout_toEndOf="@+id/btnRegister"
         android:hint="Search..."
         android:inputType="text"
         android:maxLines="1"
         android:padding="10dp" />
 
-    <!-- Cart icon -->
-    <ImageButton
-        android:id="@+id/btnCart"
-        android:layout_width="82dp"
-        android:layout_height="54dp"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginTop="2dp"
-        android:layout_marginEnd="4dp"
-        android:scaleType="centerInside"
-        android:src="@drawable/ic_shopping_cart" />
-
-    <!-- RecyclerView for grid layout of books -->
     <ListView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

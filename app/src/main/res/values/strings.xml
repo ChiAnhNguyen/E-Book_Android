@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">BookSelling</string>
+    <string name="back" >back</string>
+    <string name="please_enter_a_password" >PassWord</string>
+    <string name="login" >Login</string>
+    <string name="please_confirm_your_new_password" />
+    <string name="registration" />
+    <string name="enter_your_user_name">Usrename</string>
+
 </resources>
