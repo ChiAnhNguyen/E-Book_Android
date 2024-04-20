@@ -5,21 +5,23 @@ import android.graphics.Bitmap;
 import java.io.Serializable;
 
 public class product_detail implements Serializable {
-    String productName,categotyName,author,publisher,descript;
-    double price;
-    int productID;
+    private String productName,categotyName,author,publisher,descript;
+    private double price;
+    private int productID;
+    private int quantity;
 
 
     public product_detail() {
     }
 
-    public product_detail(String productName, String categotyName, String author, String publisher, String descript, double price) {
+    public product_detail(String productName, String categotyName, String author, String publisher, String descript, double price, int quantity) {
         this.productName = productName;
         this.categotyName = categotyName;
         this.author = author;
         this.publisher = publisher;
         this.descript = descript;
         this.price = price;
+        this.quantity=quantity;
 
     }
 
@@ -79,6 +81,14 @@ public class product_detail implements Serializable {
         this.price = price;
     }
 
+    public int getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
+    }
+
     @Override
     public String toString() {
         return "product_detail{" +
@@ -89,6 +99,7 @@ public class product_detail implements Serializable {
                 ", descript='" + descript + '\'' +
                 ", price=" + price +
                 ", productID=" + productID +
+                ", quantity=" + quantity +
                 '}';
     }
 }

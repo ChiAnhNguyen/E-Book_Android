@@ -16,6 +16,17 @@
         android:theme="@style/Theme.BookSelling"
         tools:targetApi="31">
         <activity
+            android:name=".Finish_buy"
+            android:exported="false" />
+        <activity
+            android:name=".Thank_for_buy"
+            android:exported="false"
+            android:label="@string/title_activity_thank_for_buy"
+            android:theme="@style/Theme.BookSelling" />
+        <activity
+            android:name=".CheckoutActivity"
+            android:exported="false" />
+        <activity
             android:name=".RegisterActivity"
             android:exported="false" />
         <activity

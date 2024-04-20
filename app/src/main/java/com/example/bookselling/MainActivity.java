@@ -2,7 +2,9 @@ package com.example.bookselling;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -16,14 +18,17 @@ import android.widget.Toast;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.bookselling.Database.Db_Cart;
 import com.example.bookselling.Model.Category;
 import com.example.bookselling.Model.Product;
+import com.example.bookselling.Model.User;
 import com.example.bookselling.Model.productImage;
 import com.example.bookselling.Model.product_detail;
 import com.example.bookselling.MyAdapter.ProductAdapter;
 import com.example.bookselling.Service.MyRetrofit;
 import com.example.bookselling.Service.ProductService;
 import com.example.bookselling.Service.Utils;
+import com.google.gson.Gson;
 import com.nex3z.notificationbadge.NotificationBadge;
 
 import java.util.List;
@@ -35,6 +40,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class MainActivity extends AppCompatActivity {
+    private User user;
     private ProductService productService;
     private ListView list_product;
     private ProductAdapter productAdapter;
@@ -43,6 +49,7 @@ public class MainActivity extends AppCompatActivity {
     private ImageButton btnCart;
     private NotificationBadge badge;
     FrameLayout cartframe;
+    Db_Cart dbCart;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,19 +58,13 @@ public class MainActivity extends AppCompatActivity {
         list_product = findViewById(R.id.list_product);
         badge = findViewById(R.id.menu_sl);
         cartframe = findViewById(R.id.framecart);
+        dbCart = new Db_Cart(getApplicationContext());
         // Khởi tạo Retrofit Service
         productService = MyRetrofit.getClient().create(ProductService.class);
-        if(Utils.arr_Cart==null){
-        Utils.arr_Cart = new ArrayList<>();
-        }else {
-            if(Utils.arr_Cart != null){
-                int totalitem = 0;
-                for(int i =0; i<Utils.arr_Cart.size();i++){
-                    totalitem = totalitem + Utils.arr_Cart.get(i).getQuantity();
-                }
-                badge.setText(String.valueOf(totalitem));
-            }
-        }
+        getUserPreferences();
+
+                badge.setText(String.valueOf(dbCart.getTotalItemInCart(user.getCustomerID())));
+
         ImageButton btnRegister = findViewById(R.id.btnRegister);
         btnRegister.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -196,12 +197,15 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        if(Utils.arr_Cart != null){
-            int totalitem = 0;
-            for(int i =0; i<Utils.arr_Cart.size();i++){
-                totalitem = totalitem + Utils.arr_Cart.get(i).getQuantity();
-            }
-            badge.setText(String.valueOf(totalitem));
+
+            badge.setText(String.valueOf(dbCart.getTotalItemInCart(user.getCustomerID())));
         }
+
+    public User getUserPreferences(){
+        SharedPreferences sharedPreferences = getSharedPreferences("user_prefs", Context.MODE_PRIVATE);
+        Gson gson = new Gson();
+        String userString= sharedPreferences.getString("user",null);
+        user = gson.fromJson(userString,User.class);
+        return user;
     }
 }

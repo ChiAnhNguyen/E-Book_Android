@@ -1,6 +1,7 @@
 package com.example.bookselling.Model;
 
 public class Cart {
+    private int cartID;
     private int productID;
     private String productName;
     private Double price;
@@ -9,11 +10,20 @@ public class Cart {
     public Cart() {
     }
 
-    public Cart(int productID, String productName, Double price, int quantity) {
+    public Cart(int cartID,int productID, String productName, Double price, int quantity) {
         this.productID = productID;
         this.productName = productName;
         this.price = price;
         this.quantity = quantity;
+        this.cartID = cartID;
+    }
+
+    public int getCartID() {
+        return cartID;
+    }
+
+    public void setCartID(int cartID) {
+        this.cartID = cartID;
     }
 
     public int getProductID() {
